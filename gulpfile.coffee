@@ -1,26 +1,26 @@
 gulp      = require 'gulp'
+open      = require 'open'
 jade      = require 'gulp-jade'
 gutil     = require 'gulp-util'
 karma     = require 'gulp-karma'
+ngmin     = require 'gulp-ngmin'
 coffee    = require 'gulp-coffee'
 stylus    = require 'gulp-stylus'
 concat    = require 'gulp-concat'
 uglify    = require 'gulp-uglify'
-connect   = require 'gulp-connect'
-imagemin  = require 'gulp-imagemin'
 usemin    = require 'gulp-usemin'
 notify    = require 'gulp-notify'
-ngmin     = require 'gulp-ngmin'
 inject    = require 'gulp-inject'
+connect   = require 'gulp-connect'
+imagemin  = require 'gulp-imagemin'
 protactor = require 'gulp-protractor'
-open      = require 'open'
 
 
 paths =
-  views       : 'src/**/*.jade'
-  styles      : 'src/styles/**/*.styl'
-  images      : 'src/images/**/*'
-  scripts     : 'src/scripts/**/*.coffee'
+  views:    'src/**/*.jade'
+  styles:   'src/styles/**/*.styl'
+  images:   'src/images/**/*'
+  scripts:  'src/scripts/**/*.coffee'
 
 gulp.task 'scripts', ->
   gulp.src paths.scripts
@@ -54,7 +54,7 @@ gulp.task 'styles-dev', ->
 gulp.task 'images', ->
   gulp.src paths.images
     .pipe imagemin()
-    .pipe gulp.dest paths.dest + 'dist/images'
+    .pipe gulp.dest 'dist/images'
 
 gulp.task 'images-dev', ->
   gulp.src paths.images
@@ -81,10 +81,11 @@ gulp.task 'serve', ->
   open 'http://localhost:1337', 'safari'
 
 gulp.task 'watch', ->
-  gulp.watch paths.views,   ['views']
-  gulp.watch paths.styles,  ['styles']
-  gulp.watch paths.scripts, ['scripts']
+  gulp.watch paths.views   , ['views-dev']
+  gulp.watch paths.styles  , ['styles-dev']
+  gulp.watch paths.scripts , ['scripts-dev']
+  gulp.watch paths.images  , ['images-dev']
 
-gulp.task 'build', ['scripts', 'styles', 'images', 'views']
-gulp.task 'compile', ['scripts-dev', 'styles-dev', 'images-dev', 'views-dev']
-gulp.task 'default', ['compile', 'watch', 'serve']
+gulp.task 'build'   , ['scripts'     , 'styles'     , 'images'     , 'views']
+gulp.task 'compile' , ['scripts-dev' , 'styles-dev' , 'images-dev' , 'views-dev']
+gulp.task 'default' , ['compile'     , 'watch'      , 'serve']
