@@ -1,26 +1,29 @@
-gulp      = require 'gulp'
-open      = require 'open'
-jade      = require 'gulp-jade'
-gutil     = require 'gulp-util'
-karma     = require 'gulp-karma'
-ngmin     = require 'gulp-ngmin'
-coffee    = require 'gulp-coffee'
-stylus    = require 'gulp-stylus'
-concat    = require 'gulp-concat'
-uglify    = require 'gulp-uglify'
-usemin    = require 'gulp-usemin'
-notify    = require 'gulp-notify'
-inject    = require 'gulp-inject'
-connect   = require 'gulp-connect'
-imagemin  = require 'gulp-imagemin'
-protactor = require 'gulp-protractor'
+gulp       = require 'gulp'
+open       = require 'open'
+es         = require 'event-stream'
+jade       = require 'gulp-jade'
+gutil      = require 'gulp-util'
+karma      = require 'gulp-karma'
+ngmin      = require 'gulp-ngmin'
+coffee     = require 'gulp-coffee'
+stylus     = require 'gulp-stylus'
+concat     = require 'gulp-concat'
+uglify     = require 'gulp-uglify'
+usemin     = require 'gulp-usemin'
+notify     = require 'gulp-notify'
+inject     = require 'gulp-inject'
+connect    = require 'gulp-connect'
+imagemin   = require 'gulp-imagemin'
+protactor  = require 'gulp-protractor'
+bowerFiles = require 'gulp-bower-files'
 
 
 paths =
-  views:    'src/**/*.jade'
-  styles:   'src/styles/**/*.styl'
-  images:   'src/images/**/*'
-  scripts:  'src/scripts/**/*.coffee'
+  partials:  'src/**/*.jade'
+  styles:    'src/styles/**/*.styl'
+  images:    'src/images/**/*'
+  scripts:   'src/scripts/**/*.coffee'
+  index:     'src/index.jade'
 
 gulp.task 'scripts', ->
   gulp.src paths.scripts
@@ -61,16 +64,40 @@ gulp.task 'images-dev', ->
     .pipe gulp.dest 'app/images'
     .pipe connect.reload()
 
-gulp.task 'views', ->
-  gulp.src paths.views
+gulp.task 'partials', ->
+  gulp.src paths.partials
     .pipe jade()
     .pipe gulp.dest 'dist/'
 
-gulp.task 'views-dev', ->
-  gulp.src paths.views
+gulp.task 'partials-dev', ->
+  gulp.src paths.partials
     .pipe jade pretty: yes
     .pipe gulp.dest 'app/'
     .pipe connect.reload()
+
+gulp.task 'index', ->
+  gulp.src paths.index
+    .pipe jade()
+    .pipe inject es.merge(
+      bowerFiles read: no
+    ,
+      gulp.src './dist/styles/style.css', read: no
+    ,
+      gulp.src './dist/scripts/app.js', read: no
+    )
+    .pipe gulp.dest 'dist/'
+
+gulp.task 'index-dev', ->
+  gulp.src paths.index
+    .pipe jade pretty: yes
+    .pipe inject es.merge(
+      bowerFiles read: no
+    ,
+      gulp.src './app/styles/**/*.css', read: no
+    ,
+      gulp.src './app/scripts/**/*.js', read: no
+    )
+    .pipe gulp.dest 'app/'
 
 gulp.task 'serve', ->
   connect.server
@@ -81,11 +108,11 @@ gulp.task 'serve', ->
   open 'http://localhost:1337', 'safari'
 
 gulp.task 'watch', ->
-  gulp.watch paths.views   , ['views-dev']
-  gulp.watch paths.styles  , ['styles-dev']
-  gulp.watch paths.scripts , ['scripts-dev']
-  gulp.watch paths.images  , ['images-dev']
+  gulp.watch paths.partials , ['partials-dev']
+  gulp.watch paths.styles   , ['styles-dev']
+  gulp.watch paths.scripts  , ['scripts-dev']
+  gulp.watch paths.images   , ['images-dev']
 
-gulp.task 'build'   , ['scripts'     , 'styles'     , 'images'     , 'views']
-gulp.task 'compile' , ['scripts-dev' , 'styles-dev' , 'images-dev' , 'views-dev']
+gulp.task 'build'   , ['scripts'     , 'styles'     , 'images'     , 'partials'     , 'index']
+gulp.task 'compile' , ['scripts-dev' , 'styles-dev' , 'images-dev' , 'partials-dev' , 'index-dev']
 gulp.task 'default' , ['compile'     , 'watch'      , 'serve']
