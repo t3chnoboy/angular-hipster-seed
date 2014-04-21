@@ -76,7 +76,7 @@ gulp.task 'partials-dev', ->
     .pipe gulp.dest 'app/'
     .pipe connect.reload()
 
-gulp.task 'index', ->
+gulp.task 'index', ['scripts', 'styles'], ->
   gulp.src paths.index
     .pipe jade()
     .pipe inject(es.merge(
@@ -88,7 +88,7 @@ gulp.task 'index', ->
     ), ignorePath: ['/dist', '/app'])
     .pipe gulp.dest 'dist/'
 
-gulp.task 'index-dev', ->
+gulp.task 'index-dev', ['scripts-dev', 'styles-dev'], ->
   gulp.src paths.index
     .pipe jade pretty: yes
     .pipe inject(es.merge(
