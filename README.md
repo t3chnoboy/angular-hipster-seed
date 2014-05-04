@@ -1,7 +1,7 @@
 #Angular hipster seed
 AngularJS application boilerplate for hipsters
 
-#Features
+##Features
 * Jade instead of html
 * Coffee-Script instead of JS
 * Stylus instead of css
@@ -12,7 +12,7 @@ AngularJS application boilerplate for hipsters
 * Automatic bower components injection
 * Automatic scripts and stylesheets injection
 
-#Instalation
+##Instalation
 
 Clone repo using git
 ```sh
@@ -25,29 +25,29 @@ npm install
 bower install
 ```
 
-#Usage
+##Usage
 
-##Running the App during Development
+###Running the App during Development
 This command automatically compiles coffee, jade and stylus, injects bower components, generates source maps, starts livereload server and opens your app in the browser.
 ```sh
 gulp serve
 ```
 
-##Compiling app for development
+###Compiling app for development
 This command compiles project and generates source maps. Output goes to ```sh app/``` folder
 ```
 gulp compile
 ```
 
-##Building the App for Production
+###Building the App for Production
 This command compiles project and optimizes it for production. Output goes to ```sh dist/``` folder
 ```
 gulp build
 ```
 
-#Directory layout
+##Directory layout
 
-## Source
+### Source
 
 ```sh
 angular-hipster-seed
@@ -65,7 +65,7 @@ angular-hipster-seed
         └── style.styl
 ```
 
-## Development build
+### Development build
 
 ```sh
 angular-hipster-seed
@@ -84,7 +84,7 @@ angular-hipster-seed
       └── style.css
 ```
 
-#Production build
+###Production build
 
 ```sh
  dist                     # production build
