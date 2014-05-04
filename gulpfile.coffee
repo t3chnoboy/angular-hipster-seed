@@ -19,9 +19,10 @@ bowerFiles = require 'gulp-bower-files'
 
 
 paths =
-  partials:  'src/**/*.jade'
+  partials:  'src/partials/**/*.jade'
   styles:    'src/styles/**/*.styl'
   images:    'src/images/**/*'
+  fonts:     'src/fonts/**/*'
   scripts:   'src/scripts/**/*.coffee'
   index:     'src/index.jade'
 
@@ -65,15 +66,19 @@ gulp.task 'images-dev', ->
     .pipe gulp.dest 'app/images'
     .pipe connect.reload()
 
+gulp.task 'fonts', ->
+  gulp.src paths.fonts
+    .pipe gulp.dest 'app/fonts'
+
 gulp.task 'partials', ->
   gulp.src paths.partials
     .pipe jade()
-    .pipe gulp.dest 'dist/'
+    .pipe gulp.dest 'dist/partials'
 
 gulp.task 'partials-dev', ->
   gulp.src paths.partials
     .pipe jade pretty: yes
-    .pipe gulp.dest 'app/'
+    .pipe gulp.dest 'app/partials'
     .pipe connect.reload()
 
 gulp.task 'index', ['scripts', 'styles'], ->
@@ -99,25 +104,27 @@ gulp.task 'index-dev', ['scripts-dev', 'styles-dev'], ->
       gulp.src './app/scripts/**/*.js', read: no
     ), ignorePath: '/app')
     .pipe gulp.dest 'app/'
+    .pipe connect.reload()
 
 gulp.task 'copy-bower', ->
   gulp.src 'app/bower_components/**/*'
     .pipe gulp.dest 'dist/bower_components'
 
-gulp.task 'serve', ->
+gulp.task 'serve', ['compile', 'watch'], ->
   connect.server
     port       : 1337
     root       : 'app'
     livereload : yes
 
-  open 'http://localhost:1337', 'safari'
+  open 'http://localhost:1337'
 
 gulp.task 'watch', ->
   gulp.watch paths.partials , ['partials-dev']
   gulp.watch paths.styles   , ['styles-dev']
   gulp.watch paths.scripts  , ['scripts-dev']
   gulp.watch paths.images   , ['images-dev']
+  gulp.watch paths.index    , ['index-dev']
 
-gulp.task 'build'   , ['scripts'     , 'styles'     , 'images'     , 'partials', 'copy-bower', 'index']
-gulp.task 'compile' , ['scripts-dev' , 'styles-dev' , 'images-dev' , 'partials-dev', 'index-dev']
-gulp.task 'default' , ['compile'     , 'watch'      , 'serve']
+gulp.task 'build'   , ['scripts'     , 'styles'     , 'images'     , 'partials', 'copy-bower', 'fonts', 'index']
+gulp.task 'compile' , ['scripts-dev' , 'styles-dev' , 'images-dev' , 'partials-dev', 'fonts', 'index-dev']
+gulp.task 'default' , ['serve']
