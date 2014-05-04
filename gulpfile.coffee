@@ -28,7 +28,7 @@ paths =
 
 
 # Compile coffee, generate source maps, trigger livereload
-gulp.task 'scripts', ['clean'], ->
+gulp.task 'scripts', ->
   gulp.src paths.scripts
     .pipe coffee
       bare: yes
@@ -150,6 +150,6 @@ gulp.task 'watch', ->
   gulp.watch paths.images   , ['images']
   gulp.watch paths.index    , ['index']
 
-gulp.task 'build'   , ['clean:prod' , 'scripts:prod' , 'styles:prod' , 'images:prod' , 'partials:prod' , 'copy-bower:prod' , 'fonts'  , 'index:prod']
-gulp.task 'compile' , ['clean'      , 'scripts'      , 'styles'      , 'images'      , 'partials'      , 'fonts'           , 'index']
+gulp.task 'build'   , ['clean:prod' , 'scripts:prod' , 'styles:prod' , 'images:prod' , 'partials:prod' , 'copy-bower:prod' , 'fonts' , 'index:prod']
+gulp.task 'compile' , ['scripts'    , 'styles'       , 'images'      , 'partials'    , 'fonts'         , 'index']
 gulp.task 'default' , ['serve']
