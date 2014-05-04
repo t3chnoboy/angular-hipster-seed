@@ -4,6 +4,7 @@ es         = require 'event-stream'
 jade       = require 'gulp-jade'
 gutil      = require 'gulp-util'
 ngmin      = require 'gulp-ngmin'
+clean      = require 'gulp-clean'
 coffee     = require 'gulp-coffee'
 stylus     = require 'gulp-stylus'
 concat     = require 'gulp-concat'
@@ -27,7 +28,7 @@ paths =
 
 
 # Compile coffee, generate source maps, trigger livereload
-gulp.task 'scripts', ->
+gulp.task 'scripts', ['clean'], ->
   gulp.src paths.scripts
     .pipe coffee
       bare: yes
@@ -82,12 +83,16 @@ gulp.task 'serve', ['compile', 'watch'], ->
     livereload : yes
   open 'http://localhost:1337'
 
+# Clean development build folder
+gulp.task 'clean', ->
+  gulp.src ['app/**/*', '!app/bower_components', '!app/bower_components/**'], read: no
+    .pipe clean()
 
 ############################## Production  ##############################
 
 
 # Compile coffee, minify (with ngmin applied), concat all scripts
-gulp.task 'scripts-prod', ->
+gulp.task 'scripts:prod', ->
   gulp.src paths.scripts
     .pipe coffee bare: yes
     .pipe ngmin()
@@ -96,26 +101,26 @@ gulp.task 'scripts-prod', ->
     .pipe gulp.dest 'dist/scripts'
 
 # Compile stylus, concat all stylesheets
-gulp.task 'styles-prod', ->
+gulp.task 'styles:prod', ->
   gulp.src paths.styles
     .pipe stylus()
     .pipe concat 'style.css'
     .pipe gulp.dest 'dist/styles'
 
 # Optimize images
-gulp.task 'images-prod', ->
+gulp.task 'images:prod', ->
   gulp.src paths.images
     .pipe imagemin()
     .pipe gulp.dest 'dist/images'
 
 # Compile Jade with minification enabled
-gulp.task 'partials-prod', ->
+gulp.task 'partials:prod', ->
   gulp.src paths.partials
     .pipe jade()
     .pipe gulp.dest 'dist/partials'
 
 # Compile and minify index.jade, inject concatenated and minified scripts and stylesheets
-gulp.task 'index-prod', ['scripts', 'styles'], ->
+gulp.task 'index:prod', ['scripts', 'styles'], ->
   gulp.src paths.index
     .pipe jade()
     .pipe inject(es.merge(
@@ -128,9 +133,14 @@ gulp.task 'index-prod', ['scripts', 'styles'], ->
     .pipe gulp.dest 'dist/'
 
 # Copy bower packages
-gulp.task 'copy-bower-prod', ->
+gulp.task 'copy-bower:prod', ->
   gulp.src 'app/bower_components/**/*'
     .pipe gulp.dest 'dist/bower_components'
+
+# Clean dist folder
+gulp.task 'clean:prod', ->
+  gulp.src 'dist'
+    .pipe clean()
 
 # Register tasks
 gulp.task 'watch', ->
@@ -140,6 +150,6 @@ gulp.task 'watch', ->
   gulp.watch paths.images   , ['images']
   gulp.watch paths.index    , ['index']
 
-gulp.task 'build'   , ['scripts-prod' , 'styles-prod' , 'images-prod' , 'partials-prod' , 'copy-bower-prod' , 'fonts'  , 'index-prod']
-gulp.task 'compile' , ['scripts'      , 'styles'      , 'images'      , 'partials'      , 'fonts'           , 'index']
+gulp.task 'build'   , ['clean:prod' , 'scripts:prod' , 'styles:prod' , 'images:prod' , 'partials:prod' , 'copy-bower:prod' , 'fonts'  , 'index:prod']
+gulp.task 'compile' , ['clean'      , 'scripts'      , 'styles'      , 'images'      , 'partials'      , 'fonts'           , 'index']
 gulp.task 'default' , ['serve']
