@@ -7,8 +7,9 @@
 * Automatic compilation
 * Livereload without any plugins
 * Development build with source maps
-* Production build with optimisations
-* Automatic bowr components injection
+* Production build with optimizations
+* Automatic bower components injection
+* Automatic scripts and stylesheets injection
 
 #Instalation
 
@@ -44,34 +45,11 @@ gulp build
 ```
 
 #Directory layout
+
+## Source
+
 ```sh
 angular-hipster-seed
-├── app                      # development build
-│   ├── bower_components
-│   ├── images
-│   ├── index.html          # compiled app layout
-│   ├── partials            # compiled partials
-│   ├── scripts             # compiled scripts with source maps
-│   │   ├── app.js
-│   │   ├── app.js.map      # source map
-│   │   ├── controllers
-│   │   ├── directives
-│   │   └── services
-│   └── styles               # compiled stylesheets
-│       └── style.css
-├── bower.json
-├── dist                     # production build
-│   ├── bower_components
-│   ├── images               # optimized images
-│   │   └── amazon.png
-│   ├── index.html           # minified app layout
-│   ├── partials             # minified partials
-│   ├── scripts
-│   │   └── app.js           # minified and concatenated javascripts
-│   └── styles
-│       └── style.css        # minified and concatenated styles
-├── gulpfile.coffee
-├── gulpfile.js
 └── src
     ├── images               # image files
     ├── index.jade           # app layout file (the main jade template file of the app)
@@ -84,4 +62,38 @@ angular-hipster-seed
     │   └── services         # custom angular services
     └── styles               # stylus stylesheets
         └── style.styl
+```
+
+## Development build
+
+```sh
+angular-hipster-seed
+ app                      # development build
+  ├── bower_components
+  ├── images
+  ├── index.html          # compiled app layout
+  ├── partials            # compiled partials
+  ├── scripts             # compiled scripts with source maps
+  │   ├── app.js
+  │   ├── app.js.map      # source map
+  │   ├── controllers
+  │   ├── directives
+  │   └── services
+  └── styles               # compiled stylesheets
+      └── style.css
+```
+
+#Production build
+
+```sh
+ dist                     # production build
+  ├── bower_components
+  ├── images               # optimized images
+  │   └── amazon.png
+  ├── index.html           # minified app layout
+  ├── partials             # minified partials
+  ├── scripts
+  │   └── app.js           # minified and concatenated javascripts
+  └── styles
+      └── style.css        # minified and concatenated styles
 ```
