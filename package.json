@@ -39,5 +39,8 @@
     "open": "0.0.5",
     "protractor": "^0.21.0",
     "stylus": "^0.43.1"
+  },
+  "dependencies": {
+    "gulp-clean": "^0.2.4"
   }
 }
