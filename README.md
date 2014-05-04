@@ -1,4 +1,5 @@
 #Angular hipster seed
+AngularJS application boilerplate for hipsters
 
 #Features
 * Jade instead of html
