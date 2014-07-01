@@ -12,7 +12,7 @@ AngularJS application boilerplate for hipsters
 * Automatic bower components injection
 * Automatic scripts and stylesheets injection
 
-##Instalation
+##Installation
 
 Clone repo using git
 ```sh
