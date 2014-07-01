@@ -12,6 +12,7 @@ uglify     = require 'gulp-uglify'
 inject     = require 'gulp-inject'
 connect    = require 'gulp-connect'
 imagemin   = require 'gulp-imagemin'
+sourcemaps = require 'gulp-sourcemaps'
 bowerFiles = require 'gulp-bower-files'
 
 
@@ -30,9 +31,9 @@ paths =
 # Compile coffee, generate source maps, trigger livereload
 gulp.task 'scripts', ->
   gulp.src paths.scripts
-    .pipe coffee
-      bare: yes
-      sourceMap: yes
+    .pipe(sourcemaps.init())
+    .pipe coffee bare: yes
+    .pipe(sourcemaps.write())
     .pipe gulp.dest 'app/scripts'
     .pipe connect.reload()
 
