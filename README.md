@@ -1,5 +1,5 @@
-#Angular hipster seed
-AngularJS application boilerplate for hipsters
+# (Angular) hipster seed
+Web application boilerplate for hipsters?
 
 ##Features
 * Jade instead of html
@@ -16,8 +16,8 @@ AngularJS application boilerplate for hipsters
 
 Clone repo using git
 ```sh
-git clone https://github.com/t3chnoboy/angular-hipster-seed.git
-cd angular-hipster-seed
+git clone https://github.com/ebake/hipster-seed.git
+cd hipster-seed
 ```
 Install dependemcies
 ```sh
@@ -50,51 +50,50 @@ gulp build
 ### Source
 
 ```sh
-angular-hipster-seed
+hipster-seed
 └── src
+    ├── 00-example           # example static content directory
+        ├── app.coffee
+        ├── index.jade
+        └── style.styl
+    ├── app.coffee           # coffeescript application
     ├── images               # image files
     ├── index.jade           # app layout file (the main jade template file of the app)
-    ├── partials             # angular view partials (partial jade templates)
-    ├── scripts              # coffeescripts
-    │   ├── app.coffee       # application
-    │   ├── controllers      # application controllers
-    │   ├── directives       # application directives
-    │   ├── filters          # custom angular filters
-    │   └── services         # custom angular services
-    └── styles               # stylus stylesheets
-        └── style.styl
+    └── style.styl           # stylus stylesheets
 ```
 
 ### Development build
 
 ```sh
-angular-hipster-seed
- app                      # development build
-  ├── bower_components
-  ├── images
-  ├── index.html          # compiled app layout
-  ├── partials            # compiled partials
-  ├── scripts             # compiled scripts with source maps
-  │   ├── app.js
-  │   ├── app.js.map      # source map
-  │   ├── controllers
-  │   ├── directives
-  │   └── services
-  └── styles               # compiled stylesheets
-      └── style.css
+hipster-seed
+└── build                    # development build
+    └── 00-example          # example compiled directory
+        ├── app.js
+        ├── app.js.map       # source map
+        ├── index.html
+        └── style.css
+    ├── app.js
+    ├── app.js.map          # source map
+    ├── bower_components
+    ├── images
+    ├── index.html          # compiled app layout
+    ├── partials            # compiled partials
+    └── style.css           # compiled stylesheets
 ```
 
 ###Production build
 
 ```sh
- dist                     # production build
-  ├── bower_components
-  ├── images               # optimized images
-  │   └── amazon.png
-  ├── index.html           # minified app layout
-  ├── partials             # minified partials
-  ├── scripts
-  │   └── app.js           # minified and concatenated javascripts
-  └── styles
-      └── style.css        # minified and concatenated styles
+hipster-seed
+└── dist                     # production build
+    └── 00-example           # example directory minified
+        ├── app.js
+        ├── index.html
+        └── style.css
+    ├── bower_components
+    ├── images               # optimized images
+    │   └── amazon.png
+    ├── index.html           # minified app layout
+    ├── app.js               # minified and concatenated javascripts
+    └── style.css            # minified and concatenated styles
 ```

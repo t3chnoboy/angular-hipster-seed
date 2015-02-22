@@ -1,4 +1,7 @@
 node_modules/
 bower_components/
 dist/
-app/
+build/
+*.swp
+*.swo
+npm-debug.log
