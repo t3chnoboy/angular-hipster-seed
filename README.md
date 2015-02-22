@@ -69,7 +69,7 @@ angular-hipster-seed
 
 ```sh
 angular-hipster-seed
- app                      # development build
+ build                    # development build
   ├── bower_components
   ├── images
   ├── index.html          # compiled app layout
