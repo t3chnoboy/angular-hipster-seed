@@ -4,3 +4,4 @@ dist/
 build/
 *.swp
 *.swo
+npm-debug.log
